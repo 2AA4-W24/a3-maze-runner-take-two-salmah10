@@ -3,6 +3,10 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.commons.cli.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -18,19 +22,29 @@ public class Main {
             String filePath = cmd.getOptionValue('i');
             Maze maze = new Maze(filePath);
 
-            if (cmd.getOptionValue("p") != null) {
-                logger.info("Validating path");
-                Path path = new Path(cmd.getOptionValue("p"));
-                if (maze.validatePath(path)) {
-                    System.out.println("correct path");
-                } else {
-                    System.out.println("incorrect path");
-                }
-            } else {
-                String method = cmd.getOptionValue("method", "righthand");
-                Path path = solveMaze(method, maze);
-                System.out.println(path.getFactorizedForm());
+            MazeToGraph mazeToGraph = new MazeToGraph();
+            Map<Position, LinkedList<Position>> adjacencyList = mazeToGraph.unweightedList(maze);
+
+            // Print the adjacency list for testing
+            for (Map.Entry<Position, LinkedList<Position>> entry : adjacencyList.entrySet()) {
+                System.out.print(entry.getKey() + " -> ");
+                System.out.println(entry.getValue());
             }
+
+
+//            if (cmd.getOptionValue("p") != null) { //a path is given by the user
+//                logger.info("Validating path");
+//                Path path = new Path(cmd.getOptionValue("p"));
+//                if (maze.validatePath(path)) {
+//                    System.out.println("correct path");
+//                } else {
+//                    System.out.println("incorrect path");
+//                }
+//            } else {
+//                String method = cmd.getOptionValue("method", "righthand");
+//                Path path = solveMaze(method, maze);
+//                System.out.println(path.getFactorizedForm());
+//            }
         } catch (Exception e) {
             System.err.println("MazeSolver failed.  Reason: " + e.getMessage());
             logger.error("MazeSolver failed.  Reason: " + e.getMessage());
@@ -58,6 +72,9 @@ public class Main {
             case "tremaux" -> {
                 logger.debug("Tremaux algorithm chosen.");
                 solver = new TremauxSolver();
+            }
+            case "BFS" -> {
+                solver = new BFSSolver();
             }
             default -> {
                 throw new Exception("Maze solving method '" + method + "' not supported.");

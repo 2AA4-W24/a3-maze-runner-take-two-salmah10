@@ -3,6 +3,9 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.LinkedList;
+import java.util.Map;
+
 public class RightHandSolver implements MazeSolver {
     private static final Logger logger = LogManager.getLogger();
 
@@ -43,3 +46,5 @@ public class RightHandSolver implements MazeSolver {
         return path;
     }
 }
+
+
