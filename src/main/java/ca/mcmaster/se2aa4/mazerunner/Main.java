@@ -22,14 +22,11 @@ public class Main {
             String filePath = cmd.getOptionValue('i');
             Maze maze = new Maze(filePath);
 
-            MazeToGraph mazeToGraph = new MazeToGraph();
-            Map<Position, LinkedList<Position>> adjacencyList = mazeToGraph.unweightedList(maze);
 
-            // Print the adjacency list for testing
-            for (Map.Entry<Position, LinkedList<Position>> entry : adjacencyList.entrySet()) {
-                System.out.print(entry.getKey() + " -> ");
-                System.out.println(entry.getValue());
-            }
+            BFSSolver bfsSolver = new BFSSolver();
+            bfsSolver.solve(maze);
+
+
 
 
 //            if (cmd.getOptionValue("p") != null) { //a path is given by the user
@@ -45,6 +42,7 @@ public class Main {
 //                Path path = solveMaze(method, maze);
 //                System.out.println(path.getFactorizedForm());
 //            }
+
         } catch (Exception e) {
             System.err.println("MazeSolver failed.  Reason: " + e.getMessage());
             logger.error("MazeSolver failed.  Reason: " + e.getMessage());
