@@ -22,26 +22,19 @@ public class Main {
             String filePath = cmd.getOptionValue('i');
             Maze maze = new Maze(filePath);
 
-
-            BFSSolver bfsSolver = new BFSSolver();
-            bfsSolver.solve(maze);
-
-
-
-
-//            if (cmd.getOptionValue("p") != null) { //a path is given by the user
-//                logger.info("Validating path");
-//                Path path = new Path(cmd.getOptionValue("p"));
-//                if (maze.validatePath(path)) {
-//                    System.out.println("correct path");
-//                } else {
-//                    System.out.println("incorrect path");
-//                }
-//            } else {
-//                String method = cmd.getOptionValue("method", "righthand");
-//                Path path = solveMaze(method, maze);
-//                System.out.println(path.getFactorizedForm());
-//            }
+            if (cmd.getOptionValue("p") != null) { //a path is given by the user
+                logger.info("Validating path");
+                Path path = new Path(cmd.getOptionValue("p"));
+                if (maze.validatePath(path)) {
+                    System.out.println("correct path");
+                } else {
+                    System.out.println("incorrect path");
+                }
+            } else {
+                String method = cmd.getOptionValue("method", "BFS");
+                Path path = solveMaze(method, maze);
+                System.out.println(path.getFactorizedForm());
+            }
 
         } catch (Exception e) {
             System.err.println("MazeSolver failed.  Reason: " + e.getMessage());
@@ -103,4 +96,3 @@ public class Main {
 }
 
 
-//hello

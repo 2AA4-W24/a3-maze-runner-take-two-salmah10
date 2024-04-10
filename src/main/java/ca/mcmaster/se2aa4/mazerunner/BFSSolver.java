@@ -8,7 +8,7 @@ import java.util.*;
 
 public class BFSSolver implements MazeSolver {
     private static final Logger logger = LogManager.getLogger();
-    private MazeToGraph adjacencyList = new AdjacencyList();
+    private final MazeToGraph adjacencyList = new AdjacencyList();
     Map<Position, Position> prevNode = new HashMap<>(); //used to compute the path after BFS
 
     @Override
@@ -26,7 +26,6 @@ public class BFSSolver implements MazeSolver {
             path.add(current);
             current = prevNode.get(current);
         }
-
         path.add(start);
 
         if (current == null) {
@@ -36,10 +35,8 @@ public class BFSSolver implements MazeSolver {
 
         logger.info("The path coordinates are" + path);
 
-        Path sp = new Path();
+        Path sp;
         sp = ListToPath(path);
-
-        logger.info("The shortest path is:" + sp.getFactorizedForm());
 
         return sp;
     }
@@ -79,40 +76,38 @@ public class BFSSolver implements MazeSolver {
 
     public Path ListToPath(List<Position> path){
 
-        Direction dir = Direction.LEFT; //computes the path starting from the end point
+        Direction dir = Direction.RIGHT; //computes the path starting from the end point
         Path shortPath = new Path();
 
-        for (int i = 0; i < path.size() - 1; i++) {
+        for (int i = path.size() - 1; i >= 0; i--) {
 
             Position currentPos = path.get(i);
             logger.info("current pos is" + currentPos);
-            Position nextPos = path.get(i + 1);
-            logger.info("next pos is" + nextPos);
 
-            Position temp = currentPos;
+            if (i > 0) {
+                Position nextPos = path.get(i - 1);
+                logger.info("next pos is" + nextPos);
 
-            logger.info(temp.move(dir));
-            logger.info(temp.move(dir.turnRight()));
-            logger.info(temp.move(dir.turnLeft()));
-            logger.info(temp.move(dir.turnRight().turnRight()));
+                Position temp = currentPos;
 
 
-            if (nextPos.equals(temp.move(dir))) {
-                shortPath.addStep('F');
-            } else if (nextPos.equals(temp.move(dir.turnRight()))) {
-                shortPath.addStep('R');
-                shortPath.addStep('F');
-                dir = dir.turnRight();
+                if (nextPos.equals(temp.move(dir))) {
+                    shortPath.addStep('F');
+                } else if (nextPos.equals(temp.move(dir.turnRight()))) {
+                    shortPath.addStep('R');
+                    shortPath.addStep('F');
+                    dir = dir.turnRight();
 
-            } else if (nextPos.equals(temp.move(dir.turnLeft()))) {
-                shortPath.addStep('L');
-                shortPath.addStep('F');
-                dir = dir.turnLeft();
+                } else if (nextPos.equals(temp.move(dir.turnLeft()))) {
+                    shortPath.addStep('L');
+                    shortPath.addStep('F');
+                    dir = dir.turnLeft();
 
-            } else if (nextPos.equals(temp.move(dir.turnRight().turnRight()))) {
-                shortPath.addStep('L');
-                shortPath.addStep('L');
-                dir=dir.turnRight().turnRight();
+                } else if (nextPos.equals(temp.move(dir.turnRight().turnRight()))) {
+                    shortPath.addStep('L');
+                    shortPath.addStep('L');
+                    dir = dir.turnRight().turnRight();
+                }
             }
         }
 
