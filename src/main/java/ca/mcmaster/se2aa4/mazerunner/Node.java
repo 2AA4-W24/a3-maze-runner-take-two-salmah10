@@ -1,8 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import java.util.LinkedList;
-
-
 public class Node {
     private final LinkedList<Position> connections = new LinkedList<>();
     public Position position;

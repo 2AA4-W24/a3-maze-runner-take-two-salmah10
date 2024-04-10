@@ -1,14 +1,10 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 class AdjacencyList implements MazeToGraph {
-    private static final Logger logger = LogManager.getLogger();
     private final Map<Position, LinkedList<Position>> adjacencyList = new HashMap<>();
 
     @Override
