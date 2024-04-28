@@ -33,7 +33,7 @@ public class BFSSolver implements MazeSolver {
             return null;
         }
 
-        logger.info("The path coordinates are" + path);
+//        logger.info("The path coordinates are" + path);
 
         Path sp;
         sp = ListToPath(path);
@@ -54,7 +54,7 @@ public class BFSSolver implements MazeSolver {
 
         while(!queue.isEmpty()){
 
-            logger.info("the queue is" + queue);
+//            logger.info("the queue is" + queue);
 
             Position currentNode = queue.poll();
 
@@ -70,7 +70,7 @@ public class BFSSolver implements MazeSolver {
             }
         }
 
-        System.out.println(prevNode);
+//        System.out.println(prevNode);
 
     }
 
@@ -82,11 +82,11 @@ public class BFSSolver implements MazeSolver {
         for (int i = path.size() - 1; i >= 0; i--) {
 
             Position currentPos = path.get(i);
-            logger.info("current pos is" + currentPos);
+//            logger.info("current pos is" + currentPos);
 
             if (i > 0) {
                 Position nextPos = path.get(i - 1);
-                logger.info("next pos is" + nextPos);
+//                logger.info("next pos is" + nextPos);
 
                 Position temp = currentPos;
 
