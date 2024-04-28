@@ -22,7 +22,7 @@ class AdjacencyList implements MazeToGraph {
                 }
             }
         }
-        System.out.println("The final adjacency list is:" + adjacencyList);
+//        System.out.println("The final adjacency list is:" + adjacencyList);
         return adjacencyList;
     }
 
